@@ -5,20 +5,23 @@ import './App.css'
 function App() {
 
     const [current, setCurrent] = useState('0');
-    const [prev, setPrev] = useState([]);
+    const [prev, setPrev] = useState('');
     const [nextIsReset, setNextIsReset] = useState(false);
 
     const reset = () => {
         setCurrent('0');
-        setPrev([]);
+        setPrev('');
         setNextIsReset(false)
     }
 
     const addToCurrent = (symbol) => {
         if (['/', '*', '-', '+'].indexOf(symbol) > -1) {
-            setPrev([...prev, current + symbol]);
+            if (prev === '') {
+                setPrev(current + symbol);
+            } else {
+                setPrev(eval(String(prev + current)) + symbol)
+            }
             setNextIsReset(true)
-            console.log(prev);
         }
         else {
             if ((current === "0" && symbol !== ".") || nextIsReset) {
@@ -33,11 +36,9 @@ function App() {
 
     const solve = () => {
         if (prev.length > 0) {
-            let prevItem = prev.reduce((acc, item) => acc + item, '')
-            console.log(prevItem, current)
-            let newCurrent = eval(String(prevItem + current));
+            let newCurrent = eval(String(prev + current));
             setCurrent(newCurrent);
-            setPrev([])
+            setPrev('')
             setNextIsReset(true)
         }
     }
@@ -65,7 +66,7 @@ function App() {
     return (
         <div className="App">
             {prev.length > 0 ?
-                <div className="float-last">{prev[prev.length - 1]}</div>
+                <div className="float-last">{prev}</div>
                 : null
 
             }
