@@ -33,7 +33,9 @@ function App() {
 
     const solve = () => {
         if (prev.length > 0) {
-            let newCurrent = eval(String(prev[prev.length - 1] + current));
+            let prevItem = prev.reduce((acc, item) => acc + item, '')
+            console.log(prevItem, current)
+            let newCurrent = eval(String(prevItem + current));
             setCurrent(newCurrent);
             setPrev([])
             setNextIsReset(true)
