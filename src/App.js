@@ -15,10 +15,10 @@ function App() {
     }
 
     const addToCurrent = (symbol) => {
-        console.log(symbol)
         if (['/', '*', '-', '+'].indexOf(symbol) > -1) {
             setPrev([...prev, current + symbol]);
             setNextIsReset(true)
+            console.log(prev);
         }
         else {
             if ((current === "0" && symbol !== ".") || nextIsReset) {
@@ -31,7 +31,7 @@ function App() {
         }
     }
 
-    const solve = (symbol) => {
+    const solve = () => {
         if (prev.length > 0) {
             let newCurrent = eval(String(prev[prev.length - 1] + current));
             setCurrent(newCurrent);
