@@ -7,6 +7,7 @@ function App() {
     const [current, setCurrent] = useState('0');
     const [prev, setPrev] = useState('');
     const [nextIsReset, setNextIsReset] = useState(false);
+    const [inpSym, setInpSym] = useState('')
 
     const reset = () => {
         setCurrent('0');
@@ -16,12 +17,18 @@ function App() {
 
     const addToCurrent = (symbol) => {
         if (['/', '*', '-', '+'].indexOf(symbol) > -1) {
-            if (prev === '') {
+            if (inpSym === '') {
+                setInpSym(symbol)
                 setPrev(current + symbol);
+                setNextIsReset(true)
             } else {
-                setPrev(eval(String(prev + current)) + symbol)
+                let newVal = prev.split(inpSym);
+                setPrev(newVal[0] + symbol);
+                console.log(newVal)
+                setInpSym(symbol)
+                setNextIsReset(true)
             }
-            setNextIsReset(true)
+
         }
         else {
             if ((current === "0" && symbol !== ".") || nextIsReset) {
@@ -29,7 +36,9 @@ function App() {
                 setNextIsReset(false)
             }
             else {
+                console.log('working')
                 setCurrent(current + symbol)
+
             }
         }
     }
@@ -40,6 +49,7 @@ function App() {
             setCurrent(newCurrent);
             setPrev('')
             setNextIsReset(true)
+            setInpSym('')
         }
     }
 
