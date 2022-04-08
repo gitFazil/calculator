@@ -36,7 +36,7 @@ function App() {
                 setNextIsReset(false)
             }
             else {
-                console.log('working')
+
                 setCurrent(current + symbol)
 
             }
