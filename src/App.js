@@ -8,6 +8,7 @@ function App() {
     const [prev, setPrev] = useState('');
     const [nextIsReset, setNextIsReset] = useState(false);
     const [inpSym, setInpSym] = useState('')
+    const [inpNum, setInpNum] = useState(false)
 
     const reset = () => {
         setCurrent('0');
@@ -17,10 +18,11 @@ function App() {
 
     const addToCurrent = (symbol) => {
         if (['/', '*', '-', '+'].indexOf(symbol) > -1) {
-            if (inpSym === '') {
+            if (inpSym === '' || inpNum) {
                 setInpSym(symbol)
-                setPrev(current + symbol);
+                setPrev(eval(prev + current) + symbol);
                 setNextIsReset(true)
+                setInpNum(false)
             } else {
                 let newVal = prev.split(inpSym);
                 setPrev(newVal[0] + symbol);
@@ -34,11 +36,11 @@ function App() {
             if ((current === "0" && symbol !== ".") || nextIsReset) {
                 setCurrent(symbol)
                 setNextIsReset(false)
+                setInpNum(true)
             }
             else {
-
                 setCurrent(current + symbol)
-
+                setInpNum(true)
             }
         }
     }
